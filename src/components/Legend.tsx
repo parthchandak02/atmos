@@ -6,7 +6,7 @@ interface LegendProps {
 
 const containerStyle: React.CSSProperties = {
   position: 'fixed',
-  bottom: 20,
+  bottom: 44,
   right: 20,
   zIndex: 10,
   pointerEvents: 'none',

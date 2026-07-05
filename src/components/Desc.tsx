@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react'
 
 const containerStyle: CSSProperties = {
   position: 'fixed',
-  bottom: 20,
+  bottom: 68,
   left: '50%',
   transform: 'translateX(-50%)',
   zIndex: 10,
