@@ -10,7 +10,7 @@
 
 ![Data](https://img.shields.io/badge/data-Open--Meteo-81d4fa?style=flat-square)
 ![React Three Fiber](https://img.shields.io/badge/React%20Three%20Fiber-drei-111111?style=flat-square&logo=threedotjs&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-Vite%205-111111?style=flat-square&logo=typescript&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-Vite%206-111111?style=flat-square&logo=typescript&logoColor=white)
 ![Live](https://img.shields.io/badge/live-atmos.parthchandak.info-81d4fa?style=flat-square)
 ![Status](https://img.shields.io/badge/creative%20daily-experiment-555555?style=flat-square)
 
