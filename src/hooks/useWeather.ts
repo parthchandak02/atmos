@@ -34,7 +34,10 @@ export function useWeather(): WeatherState {
       if (!res.ok) throw new Error(`HTTP ${res.status}`)
       const json = await res.json()
       if (!mounted.current) return
-      const current = json.current as WeatherCurrent
+      const current = {
+        ...(json.current as WeatherCurrent),
+        utc_offset_seconds: json.utc_offset_seconds,
+      }
       setData(current)
       setSource('live')
       setLastUpdated(Date.now())

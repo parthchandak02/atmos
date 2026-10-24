@@ -7,6 +7,7 @@ export const PALETTE = {
   accent4: '#fff176',
   text: 'rgba(0,0,0,0.5)',
   nightBg: '#0a1628',
+  nightText: 'rgba(255,255,255,0.8)',
 } as const
 
 export const ALPHA = {

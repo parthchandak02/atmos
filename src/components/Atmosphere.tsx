@@ -126,7 +126,12 @@ function AtmosphereInner({ weather, reducedMotion }: AtmosphereProps) {
   const cloudCount = getCloudCount(weather.cloud_cover)
   const cloudSpeed = getCloudSpeed(weather.wind_speed_10m)
   const turbidity = getTurbidityFromTemp(weather.temperature_2m)
-  const sunPosition = useMemo(() => getSunPosition(), [])
+  // Recomputed on every poll so the sun tracks the city's clock through the day.
+  const sunPosition = useMemo(
+    () => getSunPosition(weather.utc_offset_seconds ?? 0),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [weather.time, weather.utc_offset_seconds],
+  )
 
   const cloudOpacity = useMemo(() => {
     const base = 0.35 + (weather.cloud_cover / 100) * 0.55
@@ -140,6 +145,7 @@ function AtmosphereInner({ weather, reducedMotion }: AtmosphereProps) {
     if (category === 'storm') return 0.18
     if (category === 'rainy' || category === 'showers') return 0.22
     if (category === 'foggy') return 0.28
+    if (category === 'overcast') return 0.28
     return 0.35
   }, [isDay, category])
 
@@ -157,7 +163,15 @@ function AtmosphereInner({ weather, reducedMotion }: AtmosphereProps) {
       {isDay && (
         <directionalLight
           position={sunPosition}
-          intensity={category === 'storm' ? 0.3 : category === 'cloudy' ? 0.65 : 0.9}
+          intensity={
+            category === 'storm'
+              ? 0.3
+              : category === 'cloudy' || category === 'overcast'
+                ? 0.55
+                : category === 'partly-cloudy'
+                  ? 0.75
+                  : 0.9
+          }
           color="#fff8e8"
         />
       )}

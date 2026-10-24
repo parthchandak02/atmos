@@ -8,6 +8,8 @@ export interface WeatherCurrent {
   precipitation: number
   rain: number
   time: string
+  /** City's offset from UTC, copied from the top level of the Open-Meteo response. */
+  utc_offset_seconds?: number
 }
 
 export const WEATHER_API =
@@ -23,10 +25,14 @@ export const WEATHER_FALLBACK: WeatherCurrent = {
   rain: 0,
   precipitation: 0,
   time: new Date().toISOString(),
+  utc_offset_seconds: -7 * 3600,
 }
 
 export type WeatherCategory =
   | 'clear'
+  | 'mainly-clear'
+  | 'partly-cloudy'
+  | 'overcast'
   | 'cloudy'
   | 'foggy'
   | 'rainy'
@@ -41,6 +47,9 @@ export function getWeatherCategory(code: number): WeatherCategory {
   if (code >= 51) return 'rainy'
   if (code >= 45) return 'foggy'
   if (code >= 4) return 'cloudy'
+  if (code === 3) return 'overcast'
+  if (code === 2) return 'partly-cloudy'
+  if (code === 1) return 'mainly-clear'
   return 'clear'
 }
 
@@ -87,12 +96,17 @@ export function getWeatherDescription(code: number): string {
 export function getDataStampState(weather: WeatherCurrent): string {
   const cat = getWeatherCategory(weather.weather_code)
   if (!weather.is_day) return 'night'
-  return cat
+  return cat.replace('-', ' ')
 }
 
-export function getSunPosition(): [number, number, number] {
-  const now = new Date()
-  const hours = now.getHours() + now.getMinutes() / 60
+/** Hours since midnight in the city (not the viewer's time zone). */
+export function getCityHours(utcOffsetSeconds: number, nowMs: number = Date.now()): number {
+  const local = new Date(nowMs + utcOffsetSeconds * 1000)
+  return local.getUTCHours() + local.getUTCMinutes() / 60
+}
+
+export function getSunPosition(utcOffsetSeconds: number, nowMs?: number): [number, number, number] {
+  const hours = getCityHours(utcOffsetSeconds, nowMs)
   const dayProgress = ((hours - 6) / 12) * Math.PI
   const elevation = Math.max(0, Math.sin(dayProgress)) * 80
   const azimuth = ((hours - 6) / 24) * Math.PI

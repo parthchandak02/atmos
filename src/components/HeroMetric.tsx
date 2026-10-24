@@ -18,6 +18,7 @@ const containerStyle: CSSProperties = {
 export default function HeroMetric({ weather }: HeroMetricProps) {
   const temp = Math.round(weather.temperature_2m)
   const description = getWeatherDescription(weather.weather_code)
+  const textColor = weather.is_day ? PALETTE.text : PALETTE.nightText
 
   return (
     <div style={containerStyle}>
@@ -25,7 +26,7 @@ export default function HeroMetric({ weather }: HeroMetricProps) {
         style={{
           fontSize: 48,
           fontWeight: 700,
-          color: PALETTE.text,
+          color: textColor,
           lineHeight: 1,
           letterSpacing: '-0.02em',
         }}
@@ -36,7 +37,7 @@ export default function HeroMetric({ weather }: HeroMetricProps) {
         style={{
           marginTop: 6,
           fontSize: 12,
-          color: PALETTE.text,
+          color: textColor,
           opacity: 0.65,
         }}
       >

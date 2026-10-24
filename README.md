@@ -39,10 +39,10 @@ and whether rain, fog or lightning should appear. No API key is needed.
 
 | Open-Meteo field | Drives |
 |---|---|
-| `is_day` | Day: drei `Sky` dome with a sun and directional light. Night: 4,000 stars and a moon |
+| `is_day` | Day: drei `Sky` dome with a sun placed by San Francisco's local time (from `utc_offset_seconds`), plus a directional light. Night: 4,000 stars, a moon and light overlay text |
 | `cloud_cover` | Number of volumetric clouds (0 to 5) and how opaque they are |
 | `wind_speed_10m` | How fast the cloud bank drifts sideways, and the slant of falling rain |
-| `weather_code` | Scene state: clear, fog, 3,500 rain particles for drizzle, rain and showers, flickering lightning for thunderstorms |
+| `weather_code` | Scene state: clear, mainly clear, partly cloudy (dimmer sun), overcast (dimmer still), fog, 3,500 rain particles for drizzle, rain and showers, flickering lightning for thunderstorms |
 | `relative_humidity_2m` | Fog distance once humidity is above 75 % |
 | `temperature_2m` | The big number top-left, and haze (turbidity) in the daytime sky |
 
@@ -58,12 +58,6 @@ defaults, and the stamp in the bottom-left says `cached` or `fallback` instead o
 <sub>The daytime scene. Demo data (19 °C, partly cloudy, 60 % cover) injected into the live page.</sub>
 
 </div>
-
-> [!NOTE]
-> Rough edges in this one-day piece: the sun's height comes from the viewer's own clock rather
-> than San Francisco time and is set once on load; the overlay text stays dark at night, so it
-> is hard to read on the night sky; and weather codes 1 to 3 (mainly clear to overcast) all count
-> as `clear` for the scene state.
 
 ## Run it
 

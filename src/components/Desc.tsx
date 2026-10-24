@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import { PALETTE } from '../lib/palette'
 
 const containerStyle: CSSProperties = {
   position: 'fixed',
@@ -9,15 +10,18 @@ const containerStyle: CSSProperties = {
   pointerEvents: 'none',
   fontFamily: 'system-ui, -apple-system, sans-serif',
   fontSize: 11,
-  color: 'rgba(0,0,0,0.5)',
-  opacity: 0.45,
   textAlign: 'center',
   maxWidth: '90vw',
 }
 
-export default function Desc() {
+export default function Desc({ isDay }: { isDay: boolean }) {
   return (
-    <div id="desc" style={containerStyle}>
+    <div
+      id="desc"
+      style={{ ...containerStyle, ...(isDay
+          ? { color: PALETTE.text, opacity: 0.45 }
+          : { color: PALETTE.nightText, opacity: 0.65 }) }}
+    >
       SF weather as a living sky - clouds, sun, and rain from real data
     </div>
   )

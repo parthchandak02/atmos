@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react'
 import { getDataStampState, type WeatherCurrent } from '../lib/weather'
 import type { WeatherSource } from '../hooks/useWeather'
+import { PALETTE } from '../lib/palette'
 
 interface DataStampProps {
   weather: WeatherCurrent
@@ -17,8 +18,6 @@ const containerStyle: CSSProperties = {
   pointerEvents: 'none',
   fontFamily: 'system-ui, -apple-system, sans-serif',
   fontSize: 10,
-  color: 'rgba(0,0,0,0.5)',
-  opacity: 0.4,
 }
 
 export default function DataStamp({ weather, secondsAgo, loading, source }: DataStampProps) {
@@ -27,7 +26,12 @@ export default function DataStamp({ weather, secondsAgo, loading, source }: Data
   const label = source === 'live' ? 'live' : source
 
   return (
-    <div id="stamp" style={containerStyle}>
+    <div
+      id="stamp"
+      style={{ ...containerStyle, ...(weather.is_day
+          ? { color: PALETTE.text, opacity: 0.4 }
+          : { color: PALETTE.nightText, opacity: 0.6 }) }}
+    >
       Open-Meteo · SF · {state} · <strong>{label}</strong> · {ago}
     </div>
   )

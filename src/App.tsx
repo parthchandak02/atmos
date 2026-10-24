@@ -61,7 +61,7 @@ export default function App() {
         loading={loading}
         source={source}
       />
-      <Desc />
+      <Desc isDay={data.is_day === 1} />
       <QuietZone
         visible={detailVisible}
         onHide={handleHideDetail}

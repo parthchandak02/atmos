@@ -1,4 +1,5 @@
 import type { WeatherCurrent } from '../lib/weather'
+import { PALETTE } from '../lib/palette'
 
 interface LegendProps {
   weather: WeatherCurrent
@@ -12,8 +13,6 @@ const containerStyle: React.CSSProperties = {
   pointerEvents: 'none',
   fontFamily: 'system-ui, -apple-system, sans-serif',
   fontSize: 9,
-  color: 'rgba(0,0,0,0.5)',
-  opacity: 0.35,
   display: 'flex',
   flexDirection: 'column',
   gap: 4,
@@ -32,7 +31,9 @@ export default function Legend({ weather }: LegendProps) {
   const dayNightLabel = isDay ? 'day' : 'night'
 
   return (
-    <div style={containerStyle}>
+    <div style={{ ...containerStyle, ...(isDay
+          ? { color: PALETTE.text, opacity: 0.35 }
+          : { color: PALETTE.nightText, opacity: 0.6 }) }}>
       <div style={rowStyle}>
         <span aria-hidden>{dayNightIcon}</span>
         <span>{dayNightLabel}</span>
